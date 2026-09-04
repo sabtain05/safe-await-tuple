@@ -1,19 +1,32 @@
 {
   "name": "safe-await-tuple",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Zero-dependency Go-style async wrapper to eliminate try/catch blocks.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "commonjs",
   "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sabtain05/safe-await-tuple.git"
   },
-  "keywords": [],
+  "keywords": [
+    "promise",
+    "async",
+    "await",
+    "error-handling",
+    "tuple",
+    "try-catch"
+  ],
   "author": "Sabtain Ali",
   "license": "MIT",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/sabtain05/safe-await-tuple/issues"
   },
