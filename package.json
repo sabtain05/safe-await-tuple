@@ -11,8 +11,8 @@
     "url": "git+https://github.com/sabtain05/safe-await-tuple.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Sabtain Ali",
+  "license": "MIT",
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/sabtain05/safe-await-tuple/issues"
