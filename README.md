@@ -76,4 +76,9 @@ async function getUserProfile(userId: string) {
 
 ## License
 
-MIT © Sabtain Ali
+MIT 
+
+```
+<p align="center">
+<strong>A Sabtain Ali production</strong>
+</p>
