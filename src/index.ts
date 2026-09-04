@@ -6,3 +6,6 @@
  * @param promise The asynchronous operation to wrap.
  * @returns A promise that resolves to a tuple of [Error, null] or [null, Data].
  */
+export async function safe<T>(
+    promise: Promise<T> 
+): 
