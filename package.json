@@ -1,0 +1,25 @@
+{
+  "name": "safe-await-tuple",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sabtain05/safe-await-tuple.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/sabtain05/safe-await-tuple/issues"
+  },
+  "homepage": "https://github.com/sabtain05/safe-await-tuple#readme",
+  "devDependencies": {
+    "@types/node": "^26.4.1",
+    "typescript": "^7.0.2"
+  }
+}
