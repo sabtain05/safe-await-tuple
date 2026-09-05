@@ -29,7 +29,7 @@ console.log(user);
 
 ```
 
-**✅ The New Way (Async):**
+**✅ The New Way:**
 
 ```typescript
 import { safe } from 'safe-await-tuple';
@@ -54,11 +54,7 @@ import { safe } from 'safe-await-tuple';
 
 async function getUserProfile(userId: string) {
   const [error, profile] = await safe(database.findUser(userId));
-
-  if (error) {
-    return { success: false, reason: error.message };
-  }
-
+  if (error) return { success: false, reason: error.message };
   return { success: true, data: profile };
 }
 
@@ -71,13 +67,31 @@ import { safeSync } from 'safe-await-tuple';
 
 function parseConfig(rawJson: string) {
   const [error, config] = safeSync(() => JSON.parse(rawJson));
-
-  if (error) {
-    console.error("Invalid JSON configuration:", error.message);
-    return null;
-  }
-
+  if (error) return null;
   return config;
+}
+
+```
+
+### 3. Batching Promises (`safeAll`)
+
+Resolves an array of promises concurrently. If one promise fails, it does not crash the rest of the batch.
+
+```typescript
+import { safeAll } from 'safe-await-tuple';
+
+async function fetchDashboard() {
+  const results = await safeAll([
+    fetchUsers(),
+    fetchMetrics(),
+    fetchSettings()
+  ]);
+
+  
+  results.forEach(([err, data], index) => {
+    if (err) console.error(`Task ${index} failed:`, err.message);
+    else console.log(`Task ${index} succeeded:`, data);
+  });
 }
 
 ```
@@ -86,13 +100,12 @@ function parseConfig(rawJson: string) {
 
 * **Zero Dependencies:** Microscopic footprint, perfect for serverless and Edge environments.
 * **100% TypeScript:** First-class generic support with automatic type inference.
-* **Sync & Async Support:** Handles both promises (`safe`) and throwing synchronous functions (`safeSync`).
-* **Guaranteed Error Types:** Automatically ensures caught rejections/exceptions are formatted as standard `Error` objects.
+* **Sync, Async & Batch Support:** Handles single promises, synchronous functions, and concurrent arrays.
+* **Guaranteed Error Types:** Automatically ensures caught rejections are formatted as standard `Error` objects.
 
 ## License
 
-MIT 
-
+MIT
 
 
 <p align="center">
