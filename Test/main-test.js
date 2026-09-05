@@ -11,7 +11,7 @@ async function testV15() {
 
     const results = await safeAll([p1, p2, p3]);
 
-    results.forEach(([error, data], index)=> {
+    results.forEach(([err, data], index)=> {
         console.log(`\n--- Promise ${index + 1} ---`);
         if (err) {
             console.log("Status: FAILED");
