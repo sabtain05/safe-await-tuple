@@ -10,4 +10,6 @@ async function testV15() {
     console.log("Running safeAll...");
 
     const results = await safeAll([p1, p2, p3]);
+
+    results.forEach(([error, data], index)=> {})
 }
