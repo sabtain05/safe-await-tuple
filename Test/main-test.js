@@ -13,6 +13,9 @@ async function testV15() {
 
     results.forEach(([error, data], index)=> {
         console.log(`\n--- Promise ${index + 1} ---`);
-        if (err) {}
+        if (err) {
+            console.log("Status: FAILED");
+            console.log("Error message:", err.message);
+        }
     })
 }
