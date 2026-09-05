@@ -8,4 +8,6 @@ async function testV15() {
     const p3 = Promise.resolve({ id: 3, status: "active" });
 
     console.log("Running safeAll...");
+
+    const results = await safeAll([p1, p2, p3]);
 }
