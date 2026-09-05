@@ -1,6 +1,6 @@
 # safe-await-tuple
 
-A zero-dependency, Go-style async wrapper for Node.js and TypeScript that eliminates the need for messy `try/catch` blocks and `let` scope pollution.
+A zero-dependency, Go-style async and sync wrapper for Node.js and TypeScript that eliminates the need for messy `try/catch` blocks and `let` scope pollution.
 
 ## Installation
 
@@ -25,12 +25,11 @@ try {
   }
   return;
 }
-// code flow is fragmented
 console.log(user);
 
 ```
 
-**✅ The New Way:**
+**✅ The New Way (Async):**
 
 ```typescript
 import { safe } from 'safe-await-tuple';
@@ -42,42 +41,59 @@ if (err) {
   return;
 }
 
-// user is fully typed and ready to use immediately
 console.log(user);
+
+```
+
+## Usage
+
+### 1. Asynchronous Handling (`safe`)
+
+```typescript
+import { safe } from 'safe-await-tuple';
+
+async function getUserProfile(userId: string) {
+  const [error, profile] = await safe(database.findUser(userId));
+
+  if (error) {
+    return { success: false, reason: error.message };
+  }
+
+  return { success: true, data: profile };
+}
+
+```
+
+### 2. Synchronous Handling (`safeSync`)
+
+```typescript
+import { safeSync } from 'safe-await-tuple';
+
+function parseConfig(rawJson: string) {
+  const [error, config] = safeSync(() => JSON.parse(rawJson));
+
+  if (error) {
+    console.error("Invalid JSON configuration:", error.message);
+    return null;
+  }
+
+  return config;
+}
 
 ```
 
 ## Features
 
 * **Zero Dependencies:** Microscopic footprint, perfect for serverless and Edge environments.
-* **100% TypeScript:** First-class generic support. Result types are automatically inferred from your promises.
-* **Scope Cleanliness:** Keeps your code reading top-to-bottom without temporary `let` declarations.
-* **Guaranteed Error Types:** Automatically ensures caught rejections are formatted as standard `Error` objects.
-
-## Usage Example
-
-```typescript
-import { safe } from 'safe-await-tuple';
-
-// Simulating a database call
-async function getUserProfile(userId: string) {
-  const [error, profile] = await safe(database.findUser(userId));
-
-  if (error) {
-    // 'error' is strictly typed as an Error object
-    return { success: false, reason: error.message };
-  }
-
-  // 'profile' is strictly typed based on the Promise return type
-  return { success: true, data: profile };
-}
-
-```
+* **100% TypeScript:** First-class generic support with automatic type inference.
+* **Sync & Async Support:** Handles both promises (`safe`) and throwing synchronous functions (`safeSync`).
+* **Guaranteed Error Types:** Automatically ensures caught rejections/exceptions are formatted as standard `Error` objects.
 
 ## License
 
 MIT 
 
+```
 
 <p align="center">
 <strong>A Sabtain Ali production</strong>
