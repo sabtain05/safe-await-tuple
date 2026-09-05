@@ -40,5 +40,5 @@ export function safeSync<T> (
  * @returns A promise that resolves to an array of tuples.
  */
 export async function safeAll<T> (
-    promises
-)
+    promises: Promise<T>[]
+):
