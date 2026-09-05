@@ -18,6 +18,9 @@ async function testV15() {
             console.log("Error message:", err.message);
         } else {
             console.log("Status: SUCCESS");
+            console.log("Data:", data);
         }
-    })
+    });
 }
+
+testV15();
