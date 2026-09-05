@@ -8,4 +8,7 @@ async function testV11() {
     console.log("Error is null?", err1 === null);
     console.log("Parsed data:", data1);
     console.log("");
+
+
+    const [err2, data2] = safeSync(()=> JSON.parse('invalid-json'));
 }
