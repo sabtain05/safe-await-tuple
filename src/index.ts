@@ -32,6 +32,9 @@ export function safeSync<T> (
         const data = fn();
         return [null, data];
     } catch (error) {
-        if(error instanceof Error) {}
+        if(error instanceof Error) {
+            return [error, null];
+        }
+        return [new Error(String(error)), null];
     }
 }
