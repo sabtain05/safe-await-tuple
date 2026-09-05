@@ -5,4 +5,7 @@ async function testV15() {
 
     const p1 = Promise.resolve("Data 1");
     const p2 = Promise.reject(new Error("Database timeout"));
+    const p3 = Promise.resolve({ id: 3, status: "active" });
+
+    console.log("Running safeAll...");
 }
