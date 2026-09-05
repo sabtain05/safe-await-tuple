@@ -18,3 +18,10 @@ export async function safe<T>(
     return [new Error(String(error)), null];
 }
 }
+
+/**
+ * Wraps a synchronous function execution to return a Go-style tuple: [error, result].
+ * 
+ * @param fn The synchronous function or execution block to wrap.
+ * @returns A tuple of [Error, null] or [null, Data].
+ */
