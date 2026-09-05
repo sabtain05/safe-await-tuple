@@ -1,6 +1,4 @@
 /**
- * Wraps an asynchronous promise to return a Go-style tuple: [error, result].
- *
  * @param promise The asynchronous operation to wrap.
  * @returns A promise that resolves to a tuple of [Error, null] or [null, Data].
  */
@@ -20,8 +18,6 @@ export async function safe<T>(
 }
 
 /**
- * Wraps a synchronous function execution to return a Go-style tuple: [error, result].
- * 
  * @param fn The synchronous function or execution block to wrap.
  * @returns A tuple of [Error, null] or [null, Data].
  */
