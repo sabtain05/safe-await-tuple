@@ -29,6 +29,7 @@ export function safeSync<T> (
     fn: () => T
 ): [Error, null] | [null, T] {
     try {
-        
+        const data = fn();
+        return [null, data];
     }
 }
