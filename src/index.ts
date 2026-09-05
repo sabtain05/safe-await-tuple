@@ -41,4 +41,4 @@ export function safeSync<T> (
  */
 export async function safeAll<T> (
     promises: Promise<T>[]
-):
+): Promise<Array>[Error, null] | [null, T]>> {}
