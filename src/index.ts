@@ -25,3 +25,6 @@ export async function safe<T>(
  * @param fn The synchronous function or execution block to wrap.
  * @returns A tuple of [Error, null] or [null, Data].
  */
+export function safeSync<T> (
+    fn: () => T
+): 
