@@ -40,5 +40,5 @@ export function safeSync<T> (
 }
 
 /**
- * Wraps an array of promises and resolves them concurrently.
+
  */
