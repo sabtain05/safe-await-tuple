@@ -40,5 +40,5 @@ export function safeSync<T> (
 }
 
 /**
-
+ * @param promises An array of asynchronous operations to wrap.
  */
