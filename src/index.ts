@@ -27,4 +27,8 @@ export async function safe<T>(
  */
 export function safeSync<T> (
     fn: () => T
-): 
+): [Error, null] | [null, T] {
+    try {
+        
+    }
+}
