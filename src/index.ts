@@ -39,3 +39,6 @@ export function safeSync<T> (
  * @param promises An array of asynchronous operations to wrap.
  * @returns A promise that resolves to an array of tuples.
  */
+export async function safeAll<T> (
+    promises
+)
