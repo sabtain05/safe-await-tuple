@@ -93,7 +93,7 @@ function parseConfig(rawJson: string) {
 
 MIT 
 
-```
+
 
 <p align="center">
 <strong>A Sabtain Ali production</strong>
