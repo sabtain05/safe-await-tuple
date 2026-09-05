@@ -1,0 +1,1 @@
+const { safe, safeSync } = require('./dist/index.js');
