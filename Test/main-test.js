@@ -16,6 +16,8 @@ async function testV15() {
         if (err) {
             console.log("Status: FAILED");
             console.log("Error message:", err.message);
+        } else {
+            console.log("Status: SUCCESS");
         }
     })
 }
