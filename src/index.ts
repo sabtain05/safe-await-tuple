@@ -38,3 +38,7 @@ export function safeSync<T> (
         return [new Error(String(error)), null];
     }
 }
+
+/**
+ * Wraps an array of promises and resolves them concurrently.
+ */
