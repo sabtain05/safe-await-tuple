@@ -11,4 +11,6 @@ async function testV11() {
 
 
     const [err2, data2] = safeSync(()=> JSON.parse('invalid-json'));
+    console.log("--- Sync Failure Case ---");
+    console.log("Error message:", err2.message);
 }
