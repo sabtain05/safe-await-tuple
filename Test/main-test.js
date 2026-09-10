@@ -10,7 +10,7 @@ class CustomHttpError extends Error {
 }
 
 async function testV2() {
-  console.log("Testing safe-await-tuple v2.0.0 (Custom Errors)...\n");
+  console.log("Testing safe-await-tuple v2.0.0...\n");
 
   
   const failingApiCall = Promise.reject(new CustomHttpError("Resource Not Found", 404));
