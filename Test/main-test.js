@@ -21,7 +21,7 @@ async function testV2() {
   if (err) {
     console.log("Error Name:", err.name);
     console.log("Error Message:", err.message);
-    console.log("Custom Status Code:", err.statusCode); // TS now supports this property!
+    console.log("Custom Status Code:", err.statusCode);
   }
 }
 
