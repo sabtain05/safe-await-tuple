@@ -42,9 +42,7 @@ export function safeSync<T, E extends Error = Error>(
   }
 }
 
-/**
- * Wraps an array of promises and resolves them concurrently.
- * 
+/** 
  * @param promises An array of asynchronous operations to wrap.
  * @template T The type of the resolved data.
  * @template E The expected error type (defaults to standard Error).
