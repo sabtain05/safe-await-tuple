@@ -1,6 +1,4 @@
 /**
- * Wraps an asynchronous promise to return a Go-style tuple: [error, result].
- * 
  * @param promise The asynchronous operation to wrap.
  * @template T The type of the resolved data.
  * @template E The expected error type (defaults to standard Error).
@@ -21,8 +19,6 @@ export async function safe<T, E extends Error = Error>(
 }
 
 /**
- * Wraps a synchronous function execution to return a Go-style tuple.
- * 
  * @param fn The synchronous function or execution block to wrap.
  * @template T The type of the returned data.
  * @template E The expected error type (defaults to standard Error).
