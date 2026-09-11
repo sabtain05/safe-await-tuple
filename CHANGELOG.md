@@ -1,7 +1,6 @@
 # Changelog
 
 ## [2.0.0] - 2026-09-10
-
 ### Added
 - Introduced a second generic parameter `<T, E>` to all functions (`safe`, `safeSync`, `safeAll`).
 - Developers can now explicitly define expected custom error types (e.g., `safe<UserData, AxiosError>(...)`), restoring full IDE autocomplete for properties like `error.status` or `error.code`.
