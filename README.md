@@ -55,7 +55,7 @@ async function getUserProfile(userId: string) {
 
 ```
 
-### 2. Custom Error Types (New in v2.0.0)
+### 2. Custom Error Types
 
 If you are using libraries that throw specific error types (like `AxiosError` or `ZodError`), you can pass the error type as a second generic parameter. This gives you full TypeScript autocomplete for custom error properties.
 
