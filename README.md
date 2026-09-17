@@ -85,59 +85,8 @@ const results = await safeAll([ fetchUsers(), fetchMetrics() ]);
 
 MIT © Sabtain Ali
 
-```
+---
 
-
-# Changelog
-
-## [2.1.0] - 2026-09-17
-
-### Added
-- Introduced `safeRetry()` method to automatically re-attempt flaky asynchronous operations.
-- Accepts a factory function `() => Promise<T>` and a `maxRetries` count to elegantly handle network timeouts or cold starts before returning the standard tuple.
-
-## [2.0.0] - 2026-09-10
-### Added
-- Introduced a second generic parameter `<T, E>` to allow explicit custom error types, restoring full IDE autocomplete.
-
-## [1.5.0] - 2026-09-06
-### Added
-- Introduced `safeAll()` method to handle arrays of promises concurrently.
-
-## [1.1.0] - 2026-09-05
-### Added
-- Introduced `safeSync()` utility function.
-
-## [1.0.0] - 2026-09-05
-### Added
-- Initial release of `safe-await-tuple` with core `safe()` wrapper.
-
-```
-
-#### Git Tagging and Committing
-
-Run these commands in your terminal to save and tag this release:
-
-```bash
-# Stage the changes
-git add .
-
-# Commit Version 2.1.0
-git commit -m "feat: release v2.1.0 with safeRetry support"
-
-# Create the Git tag
-git tag v2.1.0
-
-# Push to your GitHub repository
-git push origin main
-git push origin --tags
-
-# Publish to npm registry!
-npm publish
-
-```
-
-```
 
 <p align="center">
 <strong>A Sabtain Ali production</strong>
