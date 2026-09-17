@@ -9,33 +9,6 @@ npm install safe-await-tuple
 
 ```
 
-## Why?
-
-Standard `try/catch` blocks force you to declare variables outside the block and write verbose error handling.
-
-**❌ The Old Way:**
-
-```typescript
-let user;
-try {
-  user = await fetchUser(id);
-} catch (error) {
-  if (error instanceof Error) console.error(error.message);
-  return;
-}
-
-```
-
-**✅ The New Way:**
-
-```typescript
-import { safe } from 'safe-await-tuple';
-
-const [err, user] = await safe(fetchUser(id));
-if (err) return console.error(err.message);
-
-```
-
 ## Usage
 
 ### 1. Asynchronous Handling (`safe`)
@@ -45,11 +18,7 @@ import { safe } from 'safe-await-tuple';
 
 async function getUserProfile(userId: string) {
   const [error, profile] = await safe(database.findUser(userId));
-  
-  if (error) {
-    return { success: false, reason: error.message };
-  }
-  
+  if (error) return { success: false, reason: error.message };
   return { success: true, data: profile };
 }
 
@@ -57,73 +26,116 @@ async function getUserProfile(userId: string) {
 
 ### 2. Custom Error Types
 
-If you are using libraries that throw specific error types (like `AxiosError` or `ZodError`), you can pass the error type as a second generic parameter. This gives you full TypeScript autocomplete for custom error properties.
+You can pass an expected error type (e.g., `AxiosError`) for full IDE autocomplete.
 
 ```typescript
 import { safe } from 'safe-await-tuple';
 import { AxiosError } from 'axios';
 
-interface UserData { name: string; }
 const [err, data] = await safe<UserData, AxiosError>(axios.get('/user'));
+if (err) console.log(err.response?.status);
+
+```
+
+### 3. Automatic Retries (`safeRetry`) - *New in v2.1.0*
+
+Automatically retry flaky API calls or database connections before failing. Pass a function that returns a Promise, and specify the maximum number of attempts.
+
+```typescript
+import { safeRetry } from 'safe-await-tuple';
+
+
+const [err, data] = await safeRetry(() => fetch('[https://api.example.com/data](https://api.example.com/data)'), 3);
 
 if (err) {
-  console.log("Status Code:", err.response?.status);
-  return;
+  console.error("Failed after 3 attempts:", err.message);
+} else {
+  console.log("Success:", data);
 }
 
 ```
 
-### 3. Synchronous Handling (`safeSync`)
+### 4. Synchronous Handling (`safeSync`)
 
 ```typescript
 import { safeSync } from 'safe-await-tuple';
 
-function parseConfig(rawJson: string) {
-  const [error, config] = safeSync(() => JSON.parse(rawJson));
-  
-  if (error) {
-    return null;
-  }
-  
-  return config;
-}
+const [error, config] = safeSync(() => JSON.parse(rawJson));
 
 ```
 
-### 4. Batching Promises (`safeAll`)
+### 5. Batching Promises (`safeAll`)
 
-Resolves an array of promises concurrently. If one promise fails, it does not crash the rest of the batch (solving the primary limitation of standard `Promise.all`).
+Resolves an array of promises concurrently. If one promise fails, it does not crash the rest of the batch.
 
 ```typescript
 import { safeAll } from 'safe-await-tuple';
 
-async function fetchDashboard() {
-  const results = await safeAll([ 
-    fetchUsers(), 
-    fetchMetrics() 
-  ]);
-  
-  results.forEach(([err, data], index) => {
-    if (err) {
-      console.error(`Task ${index} failed:`, err.message);
-    } else {
-      console.log(`Task ${index} succeeded:`, data);
-    }
-  });
-}
+const results = await safeAll([ fetchUsers(), fetchMetrics() ]);
 
 ```
 
 ## Features
 
-* **Zero Dependencies:** Microscopic footprint, perfect for edge environments.
+* **Zero Dependencies:** Microscopic footprint.
 * **100% TypeScript:** First-class generic support, including custom typed errors.
-* **Sync, Async & Batch Support:** Handles single promises, synchronous functions, and concurrent arrays.
-* **Guaranteed Error Types:** Automatically ensures caught exceptions are formatted as standard `Error` objects unless overridden.
+* **Sync, Async, Batch & Retry Support:** A complete suite for elegant error handling without `try/catch`.
 
 ## License
 
-MIT
+MIT © Sabtain Ali
+
+```
+
+
+# Changelog
+
+## [2.1.0] - 2026-09-17
+
+### Added
+- Introduced `safeRetry()` method to automatically re-attempt flaky asynchronous operations.
+- Accepts a factory function `() => Promise<T>` and a `maxRetries` count to elegantly handle network timeouts or cold starts before returning the standard tuple.
+
+## [2.0.0] - 2026-09-10
+### Added
+- Introduced a second generic parameter `<T, E>` to allow explicit custom error types, restoring full IDE autocomplete.
+
+## [1.5.0] - 2026-09-06
+### Added
+- Introduced `safeAll()` method to handle arrays of promises concurrently.
+
+## [1.1.0] - 2026-09-05
+### Added
+- Introduced `safeSync()` utility function.
+
+## [1.0.0] - 2026-09-05
+### Added
+- Initial release of `safe-await-tuple` with core `safe()` wrapper.
+
+```
+
+#### Git Tagging and Committing
+
+Run these commands in your terminal to save and tag this release:
+
+```bash
+# Stage the changes
+git add .
+
+# Commit Version 2.1.0
+git commit -m "feat: release v2.1.0 with safeRetry support"
+
+# Create the Git tag
+git tag v2.1.0
+
+# Push to your GitHub repository
+git push origin main
+git push origin --tags
+
+# Publish to npm registry!
+npm publish
+
+```
 
 ```
 
