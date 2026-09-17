@@ -1,28 +1,33 @@
-const { safe } = require('../dist/index.js');
+const { safeRetry } = require('../dist/index.js');
 
+async function testV2_1() {
+  console.log("Testing safe-await-tuple v2.1.0...\n");
 
-class CustomHttpError extends Error {
-  constructor(message, statusCode) {
-    super(message);
-    this.name = "CustomHttpError";
-    this.statusCode = statusCode;
-  }
-}
+  let attemptCount = 0;
 
-async function testV2() {
-  console.log("Testing safe-await-tuple v2.0.0...\n");
+  const flakyApiCall = async () => {
+    attemptCount++;
+    console.log(`  -> Executing attempt ${attemptCount}...`);
+    
+    if (attemptCount < 3) {
+      throw new Error("Network timeout!");
+    }
+    return { status: 200, message: "Connected successfully!" };
+  };
 
+  console.log("--- Testing safeRetry (Max 3 attempts) ---");
   
-  const failingApiCall = Promise.reject(new CustomHttpError("Resource Not Found", 404));
-  
-  const [err, data] = await safe(failingApiCall);
+ 
+  const [err, data] = await safeRetry(flakyApiCall, 3);
 
-  console.log("--- Custom Error Case ---");
+  console.log("");
   if (err) {
-    console.log("Error Name:", err.name);
-    console.log("Error Message:", err.message);
-    console.log("Custom Status Code:", err.statusCode);
+    console.log("Result: FAILED after all retries.");
+    console.log("Final Error:", err.message);
+  } else {
+    console.log("Result: SUCCESS!");
+    console.log("Final Data:", data);
   }
 }
 
-testV2();
+testV2_1();
