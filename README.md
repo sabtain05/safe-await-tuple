@@ -83,7 +83,7 @@ const results = await safeAll([ fetchUsers(), fetchMetrics() ]);
 
 ## License
 
-MIT © Sabtain Ali
+MIT
 
 ---
 
