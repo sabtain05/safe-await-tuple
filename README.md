@@ -9,6 +9,21 @@ npm install safe-await-tuple
 
 ```
 
+## Setup (Optional: Global Telemetry) - *New in v3.0.0*
+
+You can configure a global error hook at your app's entry point. Whenever a `safe` function catches an error anywhere in your app, it will automatically route through this hook. This is perfect for telemetry services like Sentry, Datadog, or custom loggers.
+
+```typescript
+import { configureSafe } from 'safe-await-tuple';
+
+configureSafe({
+  onError: (error) => {
+    Sentry.captureException(error);
+  }
+});
+
+```
+
 ## Usage
 
 ### 1. Asynchronous Handling (`safe`)
@@ -37,21 +52,14 @@ if (err) console.log(err.response?.status);
 
 ```
 
-### 3. Automatic Retries (`safeRetry`) - *New in v2.1.0*
+### 3. Automatic Retries (`safeRetry`)
 
-Automatically retry flaky API calls or database connections before failing. Pass a function that returns a Promise, and specify the maximum number of attempts.
+Automatically retry flaky API calls or database connections before failing.
 
 ```typescript
 import { safeRetry } from 'safe-await-tuple';
 
-
 const [err, data] = await safeRetry(() => fetch('[https://api.example.com/data](https://api.example.com/data)'), 3);
-
-if (err) {
-  console.error("Failed after 3 attempts:", err.message);
-} else {
-  console.log("Success:", data);
-}
 
 ```
 
@@ -59,7 +67,6 @@ if (err) {
 
 ```typescript
 import { safeSync } from 'safe-await-tuple';
-
 const [error, config] = safeSync(() => JSON.parse(rawJson));
 
 ```
@@ -70,7 +77,6 @@ Resolves an array of promises concurrently. If one promise fails, it does not cr
 
 ```typescript
 import { safeAll } from 'safe-await-tuple';
-
 const results = await safeAll([ fetchUsers(), fetchMetrics() ]);
 
 ```
@@ -79,14 +85,14 @@ const results = await safeAll([ fetchUsers(), fetchMetrics() ]);
 
 * **Zero Dependencies:** Microscopic footprint.
 * **100% TypeScript:** First-class generic support, including custom typed errors.
-* **Sync, Async, Batch & Retry Support:** A complete suite for elegant error handling without `try/catch`.
+* **Global Interceptors:** Auto-pipe errors to telemetry effortlessly.
+* **Sync, Async, Batch & Retry Support:** A complete suite for elegant error handling.
 
 ## License
 
 MIT
 
 ---
-
 
 <p align="center">
 <strong>A Sabtain Ali production</strong>
