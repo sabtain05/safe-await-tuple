@@ -1,33 +1,26 @@
-const { safeRetry } = require('../dist/index.js');
+const { safe, configureSafe } = require('../dist/index.js');
 
-async function testV2_1() {
-  console.log("Testing safe-await-tuple v2.1.0...\n");
 
-  let attemptCount = 0;
+configureSafe({
+  onError: (error) => {
+    console.log("\n[GLOBAL TELEMETRY HOOK FIRED]");
+    console.log(`-> Sending error to Quicklyzer/Sentry: ${error.message}`);
+  }
+});
 
-  const flakyApiCall = async () => {
-    attemptCount++;
-    console.log(`  -> Executing attempt ${attemptCount}...`);
-    
-    if (attemptCount < 3) {
-      throw new Error("Network timeout!");
-    }
-    return { status: 200, message: "Connected successfully!" };
-  };
+async function testV3() {
+  console.log("Testing safe-await-tuple v3.0.0 (Global Interceptors)...\n");
 
-  console.log("--- Testing safeRetry (Max 3 attempts) ---");
+  const failingApiCall = Promise.reject(new Error("Database connection refused"));
   
- 
-  const [err, data] = await safeRetry(flakyApiCall, 3);
+  console.log("Executing safe()...");
+  
+  const [err, data] = await safe(failingApiCall);
 
-  console.log("");
   if (err) {
-    console.log("Result: FAILED after all retries.");
-    console.log("Final Error:", err.message);
-  } else {
-    console.log("Result: SUCCESS!");
-    console.log("Final Data:", data);
+    console.log("\n[LOCAL HANDLER]");
+    console.log("Returning 500 status to user...");
   }
 }
 
-testV2_1();
+testV3();
